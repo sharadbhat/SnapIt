@@ -2,7 +2,102 @@ nav {
   background-image: linear-gradient(to right, #21d4fd, #b721ff) !important;
 }
 
+body {
+  background: #f9f9f9;
+  color: #465665;
+}
+
 input::placeholder {
   color: black;
   align-content: center;
+}
+
+img {
+  max-width: 100%;
+  vertical-align: bottom;
+}
+
+.wrapper {
+  width: 100%;
+  padding: 1em;
+}
+
+.masonry {
+  -moz-transition: all .5s ease-in-out;
+  -webkit-transition: all .5s ease-in-out;
+  transition: all .5s ease-in-out;
+  -moz-column-gap: 30px;
+  -webkit-column-gap: 30px;
+  column-gap: 30px;
+  -moz-column-fill: initial;
+  -webkit-column-fill: initial;
+  column-fill: initial;
+}
+.masonry .brick {
+  margin-bottom: 30px;
+}
+.masonry .brick img {
+  -moz-transition: all .5s ease-in-out;
+  -webkit-transition: all .5s ease-in-out;
+  transition: all .5s ease-in-out;
+}
+.masonry .brick:hover img {
+  opacity: .75;
+}
+
+.text-container {
+  position: relative;
+  text-align: center;
+}
+
+.centered {
+  background-color: #f9f9f9;
+  border-radius: 50px;
+  padding: 10px;
+  color: black;
+  opacity: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.text-container:hover .centered {
+  -moz-transition: all .5s ease-in-out;
+  -webkit-transition: all .5s ease-in-out;
+  transition: all .5s ease-in-out;
+  opacity: 1;
+}
+
+@media only screen and (min-width: 1024px) {
+  .desc {
+    font-size: 1.25em;
+  }
+
+  .intro {
+    letter-spacing: 1px;
+  }
+
+  .wrapper {
+    width: 100%;
+    padding: 2em;
+  }
+
+  .masonry {
+    -moz-column-count: 3;
+    -webkit-column-count: 3;
+    column-count: 3;
+  }
+}
+@media only screen and (min-width: 768px) and (max-width: 1023px) {
+  .wrapper {
+    width: 100%;
+    padding: 1.5em;
+  }
+
+  .masonry {
+    -moz-column-count: 2;
+    -webkit-column-count: 2;
+    column-count: 2;
+  }
 }
