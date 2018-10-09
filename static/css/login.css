@@ -476,3 +476,13 @@ iframe {
     opacity: 1;
   }
 }
+
+.error {
+  text-align: center;
+  color: white;
+  font-weight: 500;
+  padding: 5px;
+  margin-bottom: 20px;
+  background-color: red;
+  border-radius: 50px;
+}
