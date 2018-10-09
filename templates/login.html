@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 	<title>Login</title>
@@ -21,7 +21,11 @@
 							Login to InstaClone
 						</span>
 					</a>
-
+					{% if error %}
+					<div class="error">
+						Invalid Credentials
+					</div>
+					{% endif %}
 					<div class="wrap-input100 validate-input">
 						<input class="input100" type="text" name="username">
 						<span class="focus-input100" data-placeholder="Username"></span>
