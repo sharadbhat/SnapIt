@@ -1,9 +1,12 @@
 from flask import Flask, redirect, render_template, request, session, url_for
+import database
 import random
 import os
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
+
+db = database.Database()
 
 def get_random_images(page, n):
     subfolder = 'start'
@@ -14,8 +17,12 @@ def get_random_images(page, n):
 
 @app.route('/', methods = ['GET'])
 def start():
-    image_list = get_random_images(0, 3)
-    return render_template('start.html', images = image_list)
+    if 'user' not in session:
+        image_list = get_random_images(0, 5)
+        # return render_template('start.html', images = image_list)
+        return render_template('homepage.html', image = image_list)
+    else:
+        pass
 
 @app.route('/login', methods = ['GET', 'POST'])
 def login():
@@ -42,6 +49,10 @@ def register():
         username = (request.form['username']).lower().strip()
         password = (request.form['password'])
         return redirect(url_for('start'))
+
+@app.route('/homepage', methods = ['GET'])
+def homepage():
+    pass
 
 if __name__ == '__main__':
     app.run(port=8080, debug=True)
