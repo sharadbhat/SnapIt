@@ -33,14 +33,17 @@ img {
   -webkit-column-fill: initial;
   column-fill: initial;
 }
+
 .masonry .brick {
   margin-bottom: 30px;
 }
+
 .masonry .brick img {
   -moz-transition: all .5s ease-in-out;
   -webkit-transition: all .5s ease-in-out;
   transition: all .5s ease-in-out;
 }
+
 .masonry .brick:hover img {
   opacity: .75;
 }
@@ -89,6 +92,7 @@ img {
     column-count: 3;
   }
 }
+
 @media only screen and (min-width: 768px) and (max-width: 1023px) {
   .wrapper {
     width: 100%;
