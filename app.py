@@ -17,12 +17,12 @@ def get_random_images(page, n):
 
 @app.route('/', methods = ['GET'])
 def start():
-    if 'user' not in session:
-        image_list = get_random_images(0, 5)
-        # return render_template('start.html', images = image_list)
-        return render_template('homepage.html', image = image_list)
+    if 'user' in session:
+        image_list = get_random_images(0, 10)
+        return render_template('start.html', images = image_list)
     else:
-        pass
+        image_list = get_random_images(1, 10)
+        return render_template('homepage.html', images = image_list)
 
 @app.route('/login', methods = ['GET', 'POST'])
 def login():
