@@ -46,6 +46,11 @@ h5, h6 {
 
 p, ul, ol {
   margin-bottom: 30px;
+  list-style-type: none;
+}
+
+ol li {
+  list-style-type: none;
 }
 
 a:hover, a:focus, a:active {

@@ -1,0 +1,8 @@
+nav {
+  background-image: linear-gradient(to right, #21d4fd, #b721ff) !important;
+}
+
+input::placeholder {
+  color: black;
+  align-content: center;
+}
