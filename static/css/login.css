@@ -272,7 +272,7 @@ iframe {
   display: block;
   width: 100%;
   position: absolute;
-  top: 16px;
+  top: -15px;
   left: 0px;
   padding-left: 5px;
 
@@ -280,10 +280,6 @@ iframe {
   -o-transition: all 0.4s;
   -moz-transition: all 0.4s;
   transition: all 0.4s;
-}
-
-.input100:focus + .focus-input100::after {
-  top: -15px;
 }
 
 .input100:focus + .focus-input100::before {

@@ -17,40 +17,52 @@ def get_random_images(page, n):
 
 @app.route('/', methods = ['GET'])
 def start():
-    if 'user' in session:
+    if 'user' not in session:
         image_list = get_random_images(0, 10)
-        return render_template('start.html', images = image_list)
+        return render_template('start.html', images=image_list)
     else:
         image_list = get_random_images(1, 10)
-        return render_template('homepage.html', images = image_list)
+        # TODO: Get most liked images
+        return render_template('homepage.html', images=image_list)
 
 @app.route('/register', methods = ['GET', 'POST'])
 def register():
     if request.method == 'GET':
         if 'user' in session:
             return redirect(url_for('start'))
+        error = request.args.get('error', False)
         image = get_random_images(1, 1)[0]
-        return render_template('register.html', image = image, error = False)
+        return render_template('register.html', image=image, error=error)
 
     if request.method == 'POST':
         username = (request.form['username']).lower().strip()
         password = (request.form['password'])
-        # TODO: Check credentials and go to correct page
-        return redirect(url_for('start'))
+
+        if db.check_username(username) == True:
+            return redirect(url_for('register', error=True))
+        else:
+            db.add_user(username, password)
+            session['user'] = username
+            return redirect(url_for('start'))
 
 @app.route('/login', methods = ['GET', 'POST'])
 def login():
     if request.method == 'GET':
         if 'user' in session:
             return redirect(url_for('start'))
+        error = request.args.get('error', False)
         image = get_random_images(1, 1)[0]
-        return render_template('login.html', image = image, error = False)
+        return render_template('login.html', image=image, error=error)
 
     if request.method == 'POST':
         username = (request.form['username']).lower().strip()
         password = (request.form['password'])
-        # TODO: Check credentials and go to correct page
-        return redirect(url_for('start'))
+
+        if db.check_username(username) == True:
+            if db.check_password(username, password) == True:
+                session['user'] = username
+                return redirect(url_for('start'))
+        return redirect(url_for('login', error=True))
 
 @app.route('/logout', methods = ['GET'])
 def logout():

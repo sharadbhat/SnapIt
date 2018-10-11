@@ -49,9 +49,17 @@ img {
 }
 
 .text-container {
+  -webkit-animation: fadein 4s; /* Safari, Chrome and Opera > 12.1 */
+  animation: fadein 4s;
   position: relative;
   text-align: center;
 }
+
+@keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
 
 .centered {
   background-color: #f9f9f9;
