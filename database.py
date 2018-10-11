@@ -25,3 +25,10 @@ class Database:
         self.cur.execute(f'SELECT password FROM users WHERE username = "{username}"')
         hash = self.cur.fetchone()[0]
         return check_password_hash(hash, plain_password)
+
+    def add_image(self, image_id, username, title, tags):
+        try:
+            self.cur.execute(f'INSERT INTO images VALUES("{image_id}", "{title}", "{username}", 0, "{tags}")')
+            self.db.commit()
+        except:
+            self.db.rollback()
