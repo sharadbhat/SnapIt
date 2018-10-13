@@ -56,8 +56,8 @@ img {
 }
 
 @keyframes fadein {
-    from { opacity: 0; }
-    to   { opacity: 1; }
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 
 
@@ -73,7 +73,53 @@ img {
   transform: translate(-50%, -50%);
 }
 
+.top-right {
+  background-color: #f9f9f9;
+  border-radius: 50px;
+  padding: 10px;
+  color: black;
+  opacity: 0;
+  position: absolute;
+  top: 8px;
+  right: 16px;
+}
+
+.bottom-left {
+  background-color: #f9f9f9;
+  border-radius: 50px;
+  padding: 10px;
+  color: black;
+  opacity: 0;
+  position: absolute;
+  bottom: 8px;
+  left: 16px;
+}
+
+.bottom-right {
+  background-color: #f9f9f9;
+  border-radius: 50px;
+  padding: 10px;
+  color: black;
+  position: absolute;
+  bottom: 8px;
+  right: 16px;
+}
+
 .text-container:hover .centered {
+  -moz-transition: all .5s ease-in-out;
+  -webkit-transition: all .5s ease-in-out;
+  transition: all .5s ease-in-out;
+  opacity: 1;
+}
+
+.text-container:hover .top-right {
+  -moz-transition: all .5s ease-in-out;
+  -webkit-transition: all .5s ease-in-out;
+  transition: all .5s ease-in-out;
+  opacity: 1;
+}
+
+.text-container:hover .bottom-left {
   -moz-transition: all .5s ease-in-out;
   -webkit-transition: all .5s ease-in-out;
   transition: all .5s ease-in-out;
