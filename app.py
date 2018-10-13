@@ -24,7 +24,7 @@ def start():
         image_list = db.get_random_images(10)
         return render_template('start.html', images=image_list)
     else:
-        image_dict = db.get_random_images_and_title(20)
+        image_dict = db.get_random_images_and_data(20)
         # TODO: Get most liked images
         return render_template('homepage.html', user=session['user'], images=image_dict)
 
@@ -87,6 +87,47 @@ def profile(username):
         if 'user' in session:
             image_dict = db.get_user_images(username)
             return render_template('profile.html', images=image_dict)
+        else:
+            return redirect(url_for('login'))
+
+
+@app.route('/image/<id>', methods = ['GET'])
+def image(id):
+    if request.method == 'GET':
+        if 'user' in session:
+            liked = db.is_liked(session['user'], id)
+            details = db.get_details(id)
+            return render_template('image.html', user=session['user'], image=details, liked=liked)
+        else:
+            return redirect(url_for('login'))
+
+
+@app.route('/like/<id>', methods = ['GET'])
+def add_to_favourites(id):
+    if request.method == 'GET':
+        if 'user' in session:
+            db.add_to_fav(session['user'], id)
+            return redirect(url_for('image', id=id))
+        else:
+            return redirect(url_for('login'))
+
+
+@app.route('/unlike/<id>', methods = ['GET'])
+def remove_from_favourites(id):
+    if request.method == 'GET':
+        if 'user' in session:
+            db.remove_from_fav(session['user'], id)
+            return redirect(url_for('image', id=id))
+        else:
+            return redirect(url_for('login'))
+
+
+@app.route('/favourites', methods = ['GET'])
+def favourites():
+    if request.method == 'GET':
+        if 'user' in session:
+            image_dict = db.get_fav(session['user'])
+            return render_template('favourites.html', images=image_dict)
         else:
             return redirect(url_for('login'))
 
