@@ -18,23 +18,15 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 db = database.Database()
 
 
-def get_random_images(page, n):
-    subfolder = 'start'
-    if page == 1:
-        subfolder = 'login'
-    files = os.listdir(f'static/images/backgrounds/{subfolder}')
-    return random.sample(files, n)
-
-
 @app.route('/', methods = ['GET'])
 def start():
     if 'user' not in session:
-        image_list = get_random_images(0, 10)
+        image_list = db.get_random_images(10)
         return render_template('start.html', images=image_list)
     else:
-        image_list = get_random_images(1, 10)
+        image_dict = db.get_random_images_and_title(20)
         # TODO: Get most liked images
-        return render_template('homepage.html', images=image_list)
+        return render_template('homepage.html', user=session['user'], images=image_dict)
 
 
 @app.route('/register', methods = ['GET', 'POST'])
@@ -43,7 +35,7 @@ def register():
         if 'user' in session:
             return redirect(url_for('start'))
         error = request.args.get('error', False)
-        image = get_random_images(1, 1)[0]
+        image = db.get_random_images(1)[0]
         return render_template('register.html', image=image, error=error)
 
     if request.method == 'POST':
@@ -64,7 +56,7 @@ def login():
         if 'user' in session:
             return redirect(url_for('start'))
         error = request.args.get('error', False)
-        image = get_random_images(1, 1)[0]
+        image = db.get_random_images(1)[0]
         return render_template('login.html', image=image, error=error)
 
     if request.method == 'POST':
@@ -78,13 +70,34 @@ def login():
         return redirect(url_for('login', error=True))
 
 
+@app.route('/search', methods = ['GET'])
+def search():
+    if request.method == 'GET':
+        if 'user' in session:
+            query = request.args.get('query').lower()
+            image_dict = db.search(query)
+            return render_template('search.html', user=session['user'], search=query, images=image_dict)
+        else:
+            return redirect(url_for('login'))
+
+
+@app.route('/profile/<username>', methods = ['GET'])
+def profile(username):
+    if request.method == 'GET':
+        if 'user' in session:
+            image_dict = db.get_user_images(username)
+            return render_template('profile.html', images=image_dict)
+        else:
+            return redirect(url_for('login'))
+
+
 @app.route('/submit', methods = ['GET', 'POST'])
 def submit():
     if request.method == 'GET':
         if 'user' not in session:
             return redirect(url_for('login'))
         else:
-            return render_template('submit.html')
+            return render_template('submit.html', user=session['user'])
 
     if request.method == 'POST':
         if 'user' not in session:
@@ -93,10 +106,10 @@ def submit():
             image_id = str(base64.urlsafe_b64encode(str.encode(str(uuid.uuid4().fields[5]))))[2:-1][:6]
             file = request.files['imagefile']
             title = request.form['title']
-            tags = [i.strip() for i in request.form['tags'].split(',')]
+            tags = [i.strip().lower() for i in request.form['tags'].split(',')]
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], image_id + ".jpg"))
             db.add_image(image_id, session['user'], title, tags)
-            return redirect(url_for('start'))
+            return redirect(url_for('profile', username=session['user']))
 
 
 @app.route('/logout', methods = ['GET'])
