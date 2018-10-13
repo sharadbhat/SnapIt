@@ -14,11 +14,11 @@ class Database:
             images.append(i[0])
         return images
 
-    def get_random_images_and_title(self, n):
-        self.cur.execute(f'SELECT id, title FROM images ORDER BY RAND() LIMIT {n}')
+    def get_random_images_and_data(self, n):
+        self.cur.execute(f'SELECT id, title, uploader, likes FROM images ORDER BY RAND() LIMIT {n}')
         images = {}
         for i in self.cur.fetchall():
-            images[i[0]] = i[1]
+            images[i[0]] = i[1:]
         return images
 
     def add_user(self, username, plain_password):
@@ -48,16 +48,48 @@ class Database:
         except:
             self.db.rollback()
 
+    def get_details(self, id):
+        self.cur.execute(f'SELECT id, title, uploader, likes FROM images WHERE id = "{id}"')
+        details = {}
+        return self.cur.fetchone()
+
+    def is_liked(self, username, id):
+        self.cur.execute(f'SELECT COUNT(*) FROM favourites WHERE username = "{username}" AND id = "{id}"')
+        return 1 == self.cur.fetchone()[0]
+
+    def add_to_fav(self, username, id):
+        try:
+            self.cur.execute(f'INSERT INTO favourites VALUES("{username}", "{id}")')
+            self.cur.execute(f'UPDATE images SET likes = likes + 1 WHERE id = "{id}"')
+            self.db.commit()
+        except:
+            self.db.rollback()
+
+    def remove_from_fav(self, username, id):
+        try:
+            self.cur.execute(f'DELETE FROM favourites WHERE username = "{username}" AND id = "{id}"')
+            self.cur.execute(f'UPDATE images SET likes = likes - 1 WHERE id = "{id}"')
+            self.db.commit()
+        except:
+            self.db.rollback()
+
+    def get_fav(self, username):
+        self.cur.execute(f'SELECT images.id, images.title, images.uploader, images.likes FROM images, favourites WHERE images.id = favourites.id AND favourites.username = "{username}"')
+        details = {}
+        for i in self.cur.fetchall():
+            details[i[0]] = i[1:]
+        return details
+
     def search(self, query):
-        self.cur.execute(f'SELECT id, title FROM images WHERE tags LIKE "%{query}%"')
+        self.cur.execute(f'SELECT id, title, uploader, likes FROM images WHERE tags LIKE "%{query}%"')
         images = {}
         for i in self.cur.fetchall():
-            images[i[0]] = i[1]
+            images[i[0]] = i[1:]
         return images
 
     def get_user_images(self, username):
-        self.cur.execute(f'SELECT id, title FROM images WHERE uploader = "{username}"')
+        self.cur.execute(f'SELECT id, title, likes FROM images WHERE uploader = "{username}"')
         images = {}
         for i in self.cur.fetchall():
-            images[i[0]] = i[1]
+            images[i[0]] = i[1:]
         return images
