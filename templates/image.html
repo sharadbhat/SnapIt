@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <title>{{ image[1] }}</title>
+  <link rel="stylesheet" href="../static/css/materialize.css">
+  <link rel="stylesheet" href="../static/css/home.css">
+  <link rel="stylesheet" href="../static/css/material-font.css">
+</head>
+<body>
+  <div class="navbar-fixed">
+    <nav>
+      <div class="nav-wrapper">
+        <ul id="nav-mobile" class="left hide-on-med-and-down">
+          <li><a href="/" style="font-size: 30px;">Unsplash</a></li>
+        </ul>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+          <li><a href="/favourites">Favourites</a></li>
+          <li><a href="/submit">Submit</a></li>
+          <li><a href="/profile/{{ user }}">Profile</a></li>
+          <li><a href="/logout">Logout</a></li>
+        </ul>
+        <form class="hide-on-med-and-down" style="margin-left: 12%;" action="/search" method="get">
+          <div class="input-field" style="max-width: 400pt;">
+            <input id="search" name="query" type="search" required placeholder="Search">
+            <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+            <i class="material-icons">close</i>
+          </div>
+        </form>
+      </div>
+    </nav>
+  </div>
+  <center>
+    <div style="width: 50%; height: 50%;">
+      <br>
+      <div class="text-container">
+        <img src="../static/user_images/{{ image[0] }}.jpg" alt="{{ image[1] }}">
+        {% if not liked %}
+        <a href="/like/{{ image[0] }}">
+          <div class="bottom-right">Add to favourites</div>
+        </a>
+        {% endif %}
+        {% if liked %}
+        <a href="/unlike/{{ image[0] }}">
+          <div class="bottom-right">Remove from favourites</div>
+        </a>
+        {% endif %}
+      </div>
+      <br>
+      <h5>A photograph by <a href="/profile/{{ image[2] }}">{{ image[2] }}</a></h5>
+    </div>
+  </center>
+</body>
+<script src="../static/js/material.js" charset="utf-8"></script>
+</html>
