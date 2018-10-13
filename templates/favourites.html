@@ -29,6 +29,12 @@
       </div>
     </nav>
   </div>
+  {% if not images %}
+  <center>
+    <br><br>
+    <h4>No favourites added.</h4>
+  </center>
+  {% endif %}
   <div class="wrapper">
     <div class="masonry">
       {% for i in images %}
