@@ -1,55 +1,56 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title></title>
-      <link rel="stylesheet" href="../static/css/materialize.css">
-        <link rel="stylesheet" href="../static/css/home.css">
-      <link rel="stylesheet" href="../static/css/material-font.css">
-  </head>
-  <body>
-    <div class="navbar-fixed">
-      <nav>
-        <div class="nav-wrapper">
-          <ul id="nav-mobile" class="left hide-on-med-and-down">
-            <li><a href="/" style="font-size: 30px;">Unsplash</a></li>
-          </ul>
-          <ul id="nav-mobile" class="right hide-on-med-and-down">
-            <li><a href="/submit">Submit</a></li>
-            <li><a href="/logout">Logout</a></li>
-          </ul>
-          <form class="hide-on-med-and-down" style="margin-left: 12%;" action="/search" method="get">
-            <div class="input-field" style="max-width: 400pt;">
-              <input id="search" name="query" type="search" required placeholder="Search">
-              <label class="label-icon" for="search"><i class="material-icons">search</i></label>
-              <i class="material-icons">close</i>
-            </div>
-          </form>
-        </div>
-      </nav>
-    </div>
+<head>
+  <meta charset="utf-8">
+  <title>{{ Profile }}</title>
+  <link rel="stylesheet" href="../static/css/materialize.css">
+  <link rel="stylesheet" href="../static/css/home.css">
+  <link rel="stylesheet" href="../static/css/material-font.css">
+</head>
+<body>
+  <div class="navbar-fixed">
+    <nav>
+      <div class="nav-wrapper">
+        <ul id="nav-mobile" class="left hide-on-med-and-down">
+          <li><a href="/" style="font-size: 30px;">Unsplash</a></li>
+        </ul>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+          <li><a href="/favourites">Favourites</a></li>
+          <li><a href="/submit">Submit</a></li>
+          <li><a href="/logout">Logout</a></li>
+        </ul>
+        <form class="hide-on-med-and-down" style="margin-left: 12%;" action="/search" method="get">
+          <div class="input-field" style="max-width: 400pt;">
+            <input id="search" name="query" type="search" required placeholder="Search">
+            <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+            <i class="material-icons">close</i>
+          </div>
+        </form>
+      </div>
+    </nav>
+  </div>
 
-    {% if not images %}
-    <center>
-      <br><br>
-      <h4>User has not uploaded any images yet.</h4>
-    </center>
-    {% endif %}
-    <div class="wrapper">
-      <div class="masonry">
-        {% for i in images %}
-        <div class="brick">
-          <a href="/">
-            <div class="text-container">
-
+  {% if not images %}
+  <center>
+    <br><br>
+    <h4>User has not uploaded any images yet.</h4>
+  </center>
+  {% endif %}
+  <div class="wrapper">
+    <div class="masonry">
+      {% for i in images %}
+      <div class="brick">
+        <div class="text-container">
+          <a href="/image/{{ i }}">
             <img src="../static/user_images/{{ i }}.jpg">
-             <div class="centered">{{ images[i] }}</div>
-           </div>
+            <div class="centered">{{ images[i][0] }}</div>
+            <div class="top-right">{{ images[i][1] }} &hearts;</div>
           </a>
         </div>
-        {% endfor %}
       </div>
+      {% endfor %}
     </div>
-  </body>
-  <script src="../static/js/material.js" charset="utf-8"></script>
+  </div>
+</body>
+<script src="../static/js/material.js" charset="utf-8"></script>
 </html>
