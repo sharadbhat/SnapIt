@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr">
 <head>
   <meta charset="utf-8">
-  <title>{{ Profile }}</title>
+  <title>{{ user }}</title>
   <link rel="stylesheet" href="../static/css/materialize.css">
   <link rel="stylesheet" href="../static/css/home.css">
   <link rel="stylesheet" href="../static/css/material-font.css">
@@ -34,6 +34,12 @@
   <center>
     <br><br>
     <h4>User has not uploaded any images yet.</h4>
+  </center>
+  {% endif %}
+  {% if images %}
+  <center>
+    <br><br>
+    <h4>Photographs by {{ user }}</h4>
   </center>
   {% endif %}
   <div class="wrapper">
