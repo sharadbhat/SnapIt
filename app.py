@@ -7,7 +7,7 @@ import uuid
 from werkzeug.utils import secure_filename
 
 UPLOAD_FOLDER = './static/user_images/'
-ALLOWED_EXTENSIONS = set(['jpg', 'jpeg'])
+ALLOWED_EXTENSIONS = set(['jpg'])
 
 
 app = Flask(__name__)
@@ -87,7 +87,7 @@ def profile(username):
             return redirect(url_for('login'))
         else:
             image_dict = db.get_user_images(username)
-            return render_template('profile.html', images=image_dict)
+            return render_template('profile.html', user=username,images=image_dict)
 
 
 @app.route('/image/<id>', methods = ['GET'])
