@@ -25,7 +25,6 @@ def start():
         return render_template('start.html', images=image_list)
     else:
         image_dict = db.get_random_images_and_data(20)
-        # TODO: Get most liked images
         return render_template('homepage.html', user=session['user'], images=image_dict)
 
 
@@ -73,63 +72,63 @@ def login():
 @app.route('/search', methods = ['GET'])
 def search():
     if request.method == 'GET':
-        if 'user' in session:
+        if 'user' not in session:
+            return redirect(url_for('login'))
+        else:
             query = request.args.get('query').lower()
             image_dict = db.search(query)
             return render_template('search.html', user=session['user'], search=query, images=image_dict)
-        else:
-            return redirect(url_for('login'))
 
 
 @app.route('/profile/<username>', methods = ['GET'])
 def profile(username):
     if request.method == 'GET':
-        if 'user' in session:
+        if 'user' not in session:
+            return redirect(url_for('login'))
+        else:
             image_dict = db.get_user_images(username)
             return render_template('profile.html', images=image_dict)
-        else:
-            return redirect(url_for('login'))
 
 
 @app.route('/image/<id>', methods = ['GET'])
 def image(id):
     if request.method == 'GET':
-        if 'user' in session:
+        if 'user' not in session:
+            return redirect(url_for('login'))
+        else:
             liked = db.is_liked(session['user'], id)
             details = db.get_details(id)
             return render_template('image.html', user=session['user'], image=details, liked=liked)
-        else:
-            return redirect(url_for('login'))
 
 
 @app.route('/like/<id>', methods = ['GET'])
 def add_to_favourites(id):
     if request.method == 'GET':
-        if 'user' in session:
+        if 'user' not in session:
+            return redirect(url_for('login'))
+        else:
             db.add_to_fav(session['user'], id)
             return redirect(url_for('image', id=id))
-        else:
-            return redirect(url_for('login'))
 
 
 @app.route('/unlike/<id>', methods = ['GET'])
 def remove_from_favourites(id):
     if request.method == 'GET':
-        if 'user' in session:
+        if 'user' not in session:
+            return redirect(url_for('login'))
+        else:
             db.remove_from_fav(session['user'], id)
             return redirect(url_for('image', id=id))
-        else:
-            return redirect(url_for('login'))
 
 
 @app.route('/favourites', methods = ['GET'])
 def favourites():
     if request.method == 'GET':
-        if 'user' in session:
+        if 'user' not in session:
+            return redirect(url_for('login'))
+        else:
             image_dict = db.get_fav(session['user'])
             return render_template('favourites.html', images=image_dict)
-        else:
-            return redirect(url_for('login'))
 
 
 @app.route('/submit', methods = ['GET', 'POST'])
@@ -151,6 +150,19 @@ def submit():
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], image_id + ".jpg"))
             db.add_image(image_id, session['user'], title, tags)
             return redirect(url_for('profile', username=session['user']))
+
+
+@app.route('/delete/<id>', methods = ['GET'])
+def delete(id):
+    if request.method == 'GET':
+        if 'user' not in session:
+            return redirect(url_for('login'))
+        else:
+            if db.get_details(id)[2] == session['user']:
+                db.delete_image(id)
+                os.remove(os.path.join(app.config['UPLOAD_FOLDER'], id + ".jpg"))
+                return redirect(url_for('profile', username=session['user']))
+            return redirect(url_for('start'))
 
 
 @app.route('/logout', methods = ['GET'])
