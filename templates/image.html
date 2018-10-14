@@ -45,6 +45,11 @@
           <div class="bottom-right">Remove from favourites</div>
         </a>
         {% endif %}
+        {% if user == image[2] %}
+        <a href="/delete/{{ image[0] }}">
+          <div class="top-left">Delete</div>
+        </a>
+        {% endif %}
       </div>
       <br>
       <h5>A photograph by <a href="/profile/{{ image[2] }}">{{ image[2] }}</a></h5>
