@@ -84,6 +84,16 @@ img {
   right: 16px;
 }
 
+.top-left {
+  background-color: #f9f9f9;
+  border-radius: 50px;
+  padding: 10px;
+  color: black;
+  position: absolute;
+  top: 8px;
+  left: 16px;
+}
+
 .bottom-left {
   background-color: #f9f9f9;
   border-radius: 50px;
