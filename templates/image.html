@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr">
 <head>
   <meta charset="utf-8">
-  <title>Unsplash</title>
+  <title>{{ image[1] }}</title>
   <link rel="stylesheet" href="../static/css/materialize.css">
   <link rel="stylesheet" href="../static/css/home.css">
   <link rel="stylesheet" href="../static/css/material-font.css">
@@ -30,27 +30,31 @@
       </div>
     </nav>
   </div>
-
-  <div class="wrapper">
-    <div class="masonry">
-      {% for i in images %}
-      <div class="brick">
-        <div class="text-container">
-          <a href="/image/{{ i }}">
-
-            <img src="../static/user_images/{{ i }}.jpg">
-            <div class="centered">{{ images[i][0] }}</div>
-            <div class="top-right">{{ images[i][2] }} &hearts;</div>
-          </a>
-          <a href="/profile/{{ images[i][1] }}">
-            <div class="bottom-left">{{ images[i][1] }}</div>
-          </a>
-        </div>
+  <center>
+    <div style="width: 50%; height: 50%;">
+      <br>
+      <div class="text-container">
+        <img src="../static/user_images/{{ image[0] }}.jpg" alt="{{ image[1] }}">
+        {% if not liked %}
+        <a href="/like/{{ image[0] }}">
+          <div class="bottom-right">Add to favourites</div>
+        </a>
+        {% endif %}
+        {% if liked %}
+        <a href="/unlike/{{ image[0] }}">
+          <div class="bottom-right">Remove from favourites</div>
+        </a>
+        {% endif %}
+        {% if user == image[2] %}
+        <a href="/delete/{{ image[0] }}">
+          <div class="top-left">Delete</div>
+        </a>
+        {% endif %}
       </div>
-      {% endfor %}
+      <br>
+      <h5>A photograph by <a href="/profile/{{ image[2] }}">{{ image[2] }}</a></h5>
     </div>
-  </div>
-
+  </center>
 </body>
 <script src="../static/js/material.js" charset="utf-8"></script>
 </html>

@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr">
 <head>
   <meta charset="utf-8">
-  <title>Unsplash</title>
+  <title>{{ Profile }}</title>
   <link rel="stylesheet" href="../static/css/materialize.css">
   <link rel="stylesheet" href="../static/css/home.css">
   <link rel="stylesheet" href="../static/css/material-font.css">
@@ -17,7 +17,6 @@
         <ul id="nav-mobile" class="right hide-on-med-and-down">
           <li><a href="/favourites">Favourites</a></li>
           <li><a href="/submit">Submit</a></li>
-          <li><a href="/profile/{{ user }}">Profile</a></li>
           <li><a href="/logout">Logout</a></li>
         </ul>
         <form class="hide-on-med-and-down" style="margin-left: 12%;" action="/search" method="get">
@@ -31,26 +30,27 @@
     </nav>
   </div>
 
+  {% if not images %}
+  <center>
+    <br><br>
+    <h4>User has not uploaded any images yet.</h4>
+  </center>
+  {% endif %}
   <div class="wrapper">
     <div class="masonry">
       {% for i in images %}
       <div class="brick">
         <div class="text-container">
           <a href="/image/{{ i }}">
-
             <img src="../static/user_images/{{ i }}.jpg">
             <div class="centered">{{ images[i][0] }}</div>
-            <div class="top-right">{{ images[i][2] }} &hearts;</div>
-          </a>
-          <a href="/profile/{{ images[i][1] }}">
-            <div class="bottom-left">{{ images[i][1] }}</div>
+            <div class="top-right">{{ images[i][1] }} &hearts;</div>
           </a>
         </div>
       </div>
       {% endfor %}
     </div>
   </div>
-
 </body>
 <script src="../static/js/material.js" charset="utf-8"></script>
 </html>

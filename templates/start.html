@@ -1,39 +1,38 @@
 <!DOCTYPE html>
 <html lang="en" style="min-height: 100%;">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Unsplash</title>
-    <meta name="description" content="Free Bootstrap Theme by uicookies.com">
-    <meta name="keywords" content="free website templates, free bootstrap themes, free template, free bootstrap, free website template">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Unsplash</title>
+  <meta name="description" content="Free Bootstrap Theme by uicookies.com">
+  <meta name="keywords" content="free website templates, free bootstrap themes, free template, free bootstrap, free website template">
 
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Pinyon+Script" rel="stylesheet">
-    <link rel="stylesheet" href="static/css/start-styles-merged.css">
-    <link rel="stylesheet" href="static/css/start-style.min.css">
+  <link rel="stylesheet" href="static/css/start-styles-merged.css">
+  <link rel="stylesheet" href="static/css/start-style.min.css">
 
-  </head>
-  <body style="background-image: linear-gradient(to right, #21d4fd, #b721ff);">
+</head>
+<body style="background-image: linear-gradient(to right, #21d4fd, #b721ff);">
 
-    <section class="flexslider">
-      <ul class="slides">
-        {% for i in images %}
-        <li style="background-image: url(static/images/backgrounds/start/{{ i }})" class="overlay">
-          <div class="container">
-            <div class="row">
-              <div class="col-md-8 col-md-offset-2">
-                <div class="probootstrap-slider-text text-center probootstrap-animate probootstrap-heading">
-                  <h3 class="secondary-heading" style="padding-top: 20px; padding-bottom: 20px; background-image: linear-gradient(to right, #21d4fd, #b721ff); border-radius: 50px;">Unsplash</h3>
-                  <p class="sub-heading"><a href="/login" style="color: #b721ff">Log in</a> and share your photos with the world.</p>
-                </div>
+  <section class="flexslider">
+    <ul class="slides">
+      {% for i in images %}
+      <li style="background-image: url(static/user_images/{{ i }}.jpg)" class="overlay">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+              <div class="probootstrap-slider-text text-center probootstrap-animate probootstrap-heading">
+                <h3 class="secondary-heading" style="padding-top: 20px; padding-bottom: 20px; background-image: linear-gradient(to right, #21d4fd, #b721ff); border-radius: 50px;">Unsplash</h3>
+                <p class="sub-heading" style="padding: 20px; background-color: #ccc; color: #000; border-radius: 50px;"><a href="/login" style="color: #b721ff">Log in</a> and share your photos with the world.</p>
               </div>
             </div>
           </div>
-        </li>
-        {% endfor %}
-      </ul>
-    </section>
-    <script src="static/js/start-scripts.min.js"></script>
-    <script src="static/js/start-custom.min.js"></script>
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+  </section>
+  <script src="static/js/start-scripts.min.js"></script>
+  <script src="static/js/start-custom.min.js"></script>
 
-  </body>
+</body>
 </html>

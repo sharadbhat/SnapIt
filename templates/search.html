@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr">
 <head>
   <meta charset="utf-8">
-  <title>Unsplash</title>
+  <title>Search Results</title>
   <link rel="stylesheet" href="../static/css/materialize.css">
   <link rel="stylesheet" href="../static/css/home.css">
   <link rel="stylesheet" href="../static/css/material-font.css">
@@ -30,7 +30,18 @@
       </div>
     </nav>
   </div>
-
+  {% if not images %}
+  <center>
+    <br><br>
+    <h4>No images found for the search term.</h4>
+  </center>
+  {% endif %}
+  {% if images %}
+  <center>
+    <br><br>
+    <h4>Search Results for: {{ search }}</h4>
+  </center>
+  {% endif %}
   <div class="wrapper">
     <div class="masonry">
       {% for i in images %}
@@ -50,7 +61,6 @@
       {% endfor %}
     </div>
   </div>
-
 </body>
 <script src="../static/js/material.js" charset="utf-8"></script>
 </html>
