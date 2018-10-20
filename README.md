@@ -17,7 +17,7 @@ create database unsplash;
 ```
 
 ```bash
-mysql –u [username] -p -h[hostname] unsplash < dump.sql
+mysql –u [username] -p -h [hostname] unsplash < dump.sql
 ```
 
 ### Creating configuration file
@@ -46,6 +46,8 @@ Visit your [localhost:8080](https://localhost:8080) to see it in action.
 
 ##### Disclaimer
 All photos were taken from [Unsplash](https://unsplash.com).
+
+The passwords of the accounts currently in the database are ```1234```.
 
 ## Screenshots
 
