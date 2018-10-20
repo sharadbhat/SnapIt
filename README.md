@@ -22,7 +22,7 @@ mysql –u [username] -p -h [hostname] unsplash < dump.sql
 
 ### Creating configuration file
 
-- Create a file name ```db_congig.json``` in the root directory.
+- Create a file name ```db_config.json``` in the root directory.
 - Add the following data,
 
 ```json
