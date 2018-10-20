@@ -71,7 +71,7 @@ All photos were taken from [Unsplash](https://unsplash.com).
 
 #### User's photo
 
-![User Photo](https://github.com/sharadbhat/InstaClone/blob/master/Screenshots/profile.jpg "User Photo")
+![User Photo](https://github.com/sharadbhat/InstaClone/blob/master/Screenshots/own_upload.png "User Photo")
 
 #### Other User's Photo
 
