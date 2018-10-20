@@ -51,8 +51,8 @@ class Database:
 
     def delete_image(self, image_id):
         try:
-            self.cur.execute(f'DELETE FROM images WHERE id = "{image_id}"')
             self.cur.execute(f'DELETE FROM favourites WHERE id = "{image_id}"')
+            self.cur.execute(f'DELETE FROM images WHERE id = "{image_id}"')
             self.db.commit()
         except:
             self.db.rollback()
