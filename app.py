@@ -1,6 +1,7 @@
-from flask import Flask, redirect, render_template, request, session, url_for
+from flask import abort, Flask, redirect, render_template, request, session, url_for
 import base64
 import database
+from nocache import nocache
 import random
 import os
 import uuid
@@ -18,6 +19,13 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 db = database.Database()
 
 
+@app.errorhandler(404)
+@nocache
+def error_404(e):
+    return render_template('404.html')
+
+
+@nocache
 @app.route('/', methods = ['GET'])
 def start():
     if 'user' not in session:
@@ -28,6 +36,7 @@ def start():
         return render_template('homepage.html', user=session['user'], images=image_dict)
 
 
+@nocache
 @app.route('/register', methods = ['GET', 'POST'])
 def register():
     if request.method == 'GET':
@@ -49,6 +58,7 @@ def register():
             return redirect(url_for('start'))
 
 
+@nocache
 @app.route('/login', methods = ['GET', 'POST'])
 def login():
     if request.method == 'GET':
@@ -69,6 +79,7 @@ def login():
         return redirect(url_for('login', error=True))
 
 
+@nocache
 @app.route('/search', methods = ['GET'])
 def search():
     if request.method == 'GET':
@@ -80,27 +91,34 @@ def search():
             return render_template('search.html', user=session['user'], search=query, images=image_dict)
 
 
+@nocache
 @app.route('/profile/<username>', methods = ['GET'])
 def profile(username):
     if request.method == 'GET':
         if 'user' not in session:
             return redirect(url_for('login'))
         else:
+            if username not in db.get_user_list():
+                abort(404)
             image_dict = db.get_user_images(username)
             return render_template('profile.html', user=username,images=image_dict)
 
 
+@nocache
 @app.route('/image/<id>', methods = ['GET'])
 def image(id):
     if request.method == 'GET':
         if 'user' not in session:
             return redirect(url_for('login'))
         else:
+            if id not in db.get_image_list():
+                abort(404)
             liked = db.is_liked(session['user'], id)
             details = db.get_details(id)
             return render_template('image.html', user=session['user'], image=details, liked=liked)
 
 
+@nocache
 @app.route('/like/<id>', methods = ['GET'])
 def add_to_favourites(id):
     if request.method == 'GET':
@@ -111,6 +129,7 @@ def add_to_favourites(id):
             return redirect(url_for('image', id=id))
 
 
+@nocache
 @app.route('/unlike/<id>', methods = ['GET'])
 def remove_from_favourites(id):
     if request.method == 'GET':
@@ -121,6 +140,7 @@ def remove_from_favourites(id):
             return redirect(url_for('image', id=id))
 
 
+@nocache
 @app.route('/favourites', methods = ['GET'])
 def favourites():
     if request.method == 'GET':
@@ -131,6 +151,7 @@ def favourites():
             return render_template('favourites.html', images=image_dict)
 
 
+@nocache
 @app.route('/submit', methods = ['GET', 'POST'])
 def submit():
     if request.method == 'GET':
@@ -152,6 +173,7 @@ def submit():
             return redirect(url_for('profile', username=session['user']))
 
 
+@nocache
 @app.route('/delete/<id>', methods = ['GET'])
 def delete(id):
     if request.method == 'GET':
@@ -165,6 +187,7 @@ def delete(id):
             return redirect(url_for('start'))
 
 
+@nocache
 @app.route('/logout', methods = ['GET'])
 def logout():
     if request.method == 'GET':
