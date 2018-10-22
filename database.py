@@ -8,6 +8,20 @@ class Database:
         self.db = pymysql.connect(host=config['host'], user=config['user'], passwd=config['passwd'], db=config['db'])
         self.cur = self.db.cursor()
 
+    def get_user_list(self):
+        self.cur.execute('SELECT username FROM users')
+        users = []
+        for i in self.cur.fetchall():
+            users.append(i[0])
+        return users
+
+    def get_image_list(self):
+        self.cur.execute('SELECT id FROM images')
+        images = []
+        for i in self.cur.fetchall():
+            images.append(i[0])
+        return images
+
     def get_random_images(self, n):
         self.cur.execute(f'SELECT id FROM images ORDER BY RAND() LIMIT {n}')
         images = []
